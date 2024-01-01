@@ -1,0 +1,11 @@
+#cloud-config
+users:
+  - default
+  - name: ansible
+    primary_group: ansible
+    groups: sudo
+    shell: /bin/bash
+    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+    lock_passwd: false
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDRf+80ShWPnkatTiENSDNtUsYexo43sXvBZV3Mf3lWJSs7RHn/vow2aGRMlkY9N7RdI33XMuNP0t42dE+jYmiXH53y3R4mPqBbIJE6axFZI0doTDw4uSK5hP+LNyCRseR2TrBp7I00TvhWTwknVJm5SvHJ43pA5nSYlDES5qi9ZX8eBog+fxNx4UU/OikPJ3NrvgRS9yz4pa5ki1ioLpV2KAMXsLzFLUBvlsyE3EcQs/7TKhhBtsrE4FK8pat+y+KpTDwxhk6BqNBgEyWrGlju3YcsV6MVpVX3RtD2ivsdPKeH1o2xgjEMhP/al74C4bdcNzn/p5zFPVfBcbS547qKM9ZkYeJCtK68qtosnhOjBL6g6TCzQQe68hz+wyHpr4MIkGIJxi3kLzXNqZ+FhBcY4TFSbAcO5ygxL1fYvVY99Z7YWFC9aILMUtSeZLU9dkw0HT79IQ2x0Pbt4kCygOfCReIscm02xlMnvkegotULUYD2G7UTM4fsjbtY5L+G+4U= mrandrew@mrandrew-VirtualBox
