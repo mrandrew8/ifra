@@ -1,7 +1,7 @@
 provider "yandex" {
-  cloud_id  = var.cloud_id
-  folder_id = var.folder_id
-  zone      = var.zone
+  cloud_id  = "cloud_id"
+  folder_id = "folder_id"
+  zone      = "zone"
 }
 
     variable "network_zone" {
