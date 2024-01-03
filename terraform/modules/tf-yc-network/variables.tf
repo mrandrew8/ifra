@@ -1,3 +1,4 @@
+#Зоны доступности сети Яндекс.Облако
 variable "network_zone" {
   description = "Yandex.Cloud network availability zones"
   type        = string

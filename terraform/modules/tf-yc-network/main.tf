@@ -1,3 +1,4 @@
+#описание двух датасоурсов: виртуальная сеть и подсеть в облаке
 data "yandex_vpc_network" "default" {
     name = "default"
 }

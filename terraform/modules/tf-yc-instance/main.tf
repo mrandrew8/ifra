@@ -1,3 +1,4 @@
+#Создание инстанса с именем chapter5-lesson2-std-024-12
 resource "yandex_compute_instance" "vm-1" {
     name = "chapter5-lesson2-std-024-12"
     zone = var.zone
