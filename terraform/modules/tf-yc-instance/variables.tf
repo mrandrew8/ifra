@@ -3,6 +3,11 @@ variable zone {
   default     = "ru-central1-a"
 }
 
+variable platform_id {
+  description = "Выбор платформы гарантирует тип физического процессора в дата-центре и определяет набор допустимых конфигураций vCPU и RAM"
+  default     = "standard-v3"
+}
+
 variable cores {
   description = "кол-во ядер для создаваемой виртуалки"
   default     = 2
@@ -32,3 +37,9 @@ variable preemptible {
   description = "политика планирования. Чтобы создать прерываемую ВМ, укажите preemptible = true"
   default     = true
 }
+
+variable size {
+  description = "размер диска в ГБ"
+  default     = 50
+}
+

@@ -17,6 +17,7 @@ resource "yandex_compute_instance" "vm-1" {
     boot_disk {
         initialize_params {
             image_id = var.image_id
+            size = var.size
         }
     }
 
@@ -36,4 +37,5 @@ resource "yandex_compute_instance" "vm-1" {
     scheduling_policy {
     	preemptible = var.preemptible
   }
+    
 }
