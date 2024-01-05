@@ -1,5 +1,8 @@
 # infrastructure
-
+в осноном файлике main.tf подключил два модуля tf-yc-instance" и "tf-yc-network".
+в файлике provider.tf описаны данные провайдера.
+s3.bakend.tf - подключил s3 для хранения состояний. Предварительно нужно сохранить идентификатор и ключа в переменные AWS_SECRET_ACCESS_KEY и AWS_ACCESS_KEY_ID. Можно сделать так: export AWS_SECRET_ACCESS_KEY=<подставить значение своего ключа>
+terraform.tfvars - переменные для корневого модуля
 
 
 ## Getting started
