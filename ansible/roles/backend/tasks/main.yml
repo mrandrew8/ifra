@@ -1,2 +1,44 @@
 ---
 # tasks file for backend
+- name: create service user
+  user:
+    name: backend
+    group: backend
+    groups: sudo, backend
+    shell: /bin/bash
+#    passowrd: "{{ item.password }}"
+    state: present
+
+- name: create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: backend
+    group: backend
+    mode: 0775
+  with_items:
+    - /var/sausage-store/reports # рпеорты
+    - /var/sausage-store/logs # дефолтные логи
+    - /opt/sausage-store/bin # здесь будем хранить джарник
+    - /opt/log # outputs
+
+- name: Create File 
+  file:
+    path: "{{item}}"
+    state: touch
+    owner: backend
+    group: backend
+    mode: 0644
+  with_items:
+    - /opt/log/backend_out.log # вывод StandartOutput сервиса
+    - /opt/log/sausage-store-backend.log # вывод StandartError сервиса
+
+- name: apt-get update
+  apt:
+    update_cache: yes
+
+- name: установка последней версии openjdk-16-jdk 
+  apt:
+    name: openjdk-16-jdk
+    state: latest
+    install_recommends: no
