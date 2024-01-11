@@ -47,3 +47,27 @@
     name: openjdk-16-jdk
     state: latest
     install_recommends: no
+
+- name: Используем модуль maven_artifact, он скачает пакет приложения с Nexus
+  maven_artifact:
+    dest: "/opt/sausage-store/bin/sausage-store.jar"
+    repository_url: "https://nexus.praktikum-services.tech/repository/sausage-store"
+    group_id: "com.yandex.practicum.devops"
+    artifact_id: "sausage-store"
+    version: "1.0.976252"
+
+- name: copy backen unit service
+  copy:
+    src: /etc/systemd/system/backend.service
+    dest: /etc/systemd/system/backend.service
+    owner: backend
+    mode: '0644'
+  
+- name: Перечитываем конфигурацию systemd
+  systemd:
+    daemon_reload: yes
+
+- name: starting service
+  service:
+    name: backend.service
+    state: running 
