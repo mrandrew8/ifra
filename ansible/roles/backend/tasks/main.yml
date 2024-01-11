@@ -4,7 +4,7 @@
   user:
     name: backend
     group: backend
-    groups: sudo, backend
+    groups: sudo
     shell: /bin/bash
 #    passowrd: "{{ item.password }}"
     state: present
