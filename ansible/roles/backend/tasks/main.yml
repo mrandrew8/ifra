@@ -1,10 +1,15 @@
 ---
 # tasks file for backend
+- name: create group
+  group:
+    name: backend
+    state: present
+
 - name: create service user
   user:
     name: backend
     group: backend
-    groups: sudo
+    groups: sudo, backend
     shell: /bin/bash
 #    passowrd: "{{ item.password }}"
     state: present
