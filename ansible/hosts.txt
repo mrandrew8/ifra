@@ -1,0 +1,2 @@
+[prod_servers]
+sausage1 ansible_host=158.160.99.62
