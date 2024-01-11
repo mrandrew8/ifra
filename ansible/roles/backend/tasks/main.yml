@@ -42,7 +42,7 @@
   apt:
     update_cache: yes
 
-- name: установка последней версии openjdk-16-jdk 
+- name: instaling latest version openjdk-16-jdk 
   apt:
     name: openjdk-16-jdk
     state: latest
@@ -57,7 +57,7 @@
   pip: 
     name=lxml
 
-- name: Используем модуль maven_artifact, он скачает пакет приложения с Nexus
+- name: maven_artifact for downloading package from Nexus
   maven_artifact:
     dest: "/opt/sausage-store/bin/sausage-store.jar"
     repository_url: "https://nexus.praktikum-services.tech/repository/sausage-store"
@@ -72,11 +72,11 @@
     owner: backend
     mode: '0644'
   
-- name: Перечитываем конфигурацию systemd
+- name: reread systemd unit
   systemd:
     daemon_reload: yes
 
 - name: starting service
   service:
     name: backend.service
-    state: running 
+    state: started 
