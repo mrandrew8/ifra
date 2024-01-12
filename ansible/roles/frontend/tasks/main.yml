@@ -27,3 +27,37 @@
   apt:
     name: nodejs
     state: present
+
+- name: copy backen unit service
+  copy:
+    src: /etc/systemd/system/frontend.service
+    dest: /etc/systemd/system/frontend.service
+    owner: frontend
+    mode: '0644'
+
+- name: create directories
+  file:
+    path: /var/www-data/dist/frontend
+    state: directory
+    owner: frontend
+    group: frontend
+    mode: 0775
+
+- name: Downloading from nexus
+  get_url:
+    url: https://nexus.praktikum-services.tech/repository/std-024-12-frontend/$1.0.969767/sausage-store-1.2.969767.tar.gz
+    dest: /home/ansible
+
+- name: untar 
+  ansible.builtin.unarchive:
+    src: /home/ansible/sausage-store.1.2.969767.tar.gz
+    dest: /var/www-data/dist/frontend
+
+- name: reread systemd unit
+  systemd:
+    daemon_reload: yes
+
+- name: starting service
+  service:
+    name: frontend.service
+    state: started 
