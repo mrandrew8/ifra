@@ -59,10 +59,10 @@
   when: dns_fix.changed
 
 - name: Downloading from nexus
-  get_url:
+  uri:
     url: https://nexus.praktikum-services.tech/repository/std-024-12-frontend/1.0.969767/sausage-store-1.2.969767.tar.gz
-    url_username: std-024-12
-    url_password: E5h3x9Xk
+    user: std-024-12
+    password: E5h3x9Xk
     dest: /home/ansible
 
 - name: untar 
