@@ -61,8 +61,8 @@
 - name: Downloading from nexus
   get_url:
     url: https://nexus.praktikum-services.tech/repository/std-024-12-frontend/1.0.969767/sausage-store-1.2.969767.tar.gz
-    user: std-024-12
-    password: E5h3x9Xk
+    url_user: std-024-12
+    url_password: E5h3x9Xk
     dest: /home/ansible
 
 - name: untar 
