@@ -14,23 +14,19 @@
 #    passowrd: "{{ item.password }}"
     state: present
 
-- name: install npm
-  npm:
-    path: /user/bin
+- name: Add nodejs apt key
+  apt_key:
+    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
     state: present
-    version: 16
 
-- name: Add repositories for Node.js.
+- name: Add nodejs 16.x ppa for apt repo
   apt_repository:
-    repo: deb https://deb.nodesource.com/setup_18.x
-    state: present
-
-- name: Update apt cache
-  apt: 
+    repo: deb https://deb.nodesource.com/node_16.x bionic main
     update_cache: yes
 
-- name: install nodejs
+- name: "Install nodejs"
   apt:
+    update_cache: yes
     name: nodejs
     state: present
 
