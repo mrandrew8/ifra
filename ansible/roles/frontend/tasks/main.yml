@@ -1,2 +1,58 @@
 ---
 # tasks file for frontend
+- name: create group
+  group:
+    name: frontend
+    state: present
+
+- name: create service user
+  user:
+    name: frontend
+    group: frontend
+    groups: sudo, frontend
+    shell: /bin/bash
+#    passowrd: "{{ item.password }}"
+    state: present
+
+- name: install npm
+  npm:
+    state: present
+    version: 16
+
+- name: Add repositories for Node.js.
+  apt_repository:
+    repo: deb https://deb.nodesource.com/setup_18.x
+    state: present
+
+- name: Update apt cache
+  apt: 
+    update_cache: yes
+
+- name: install nodejs
+  apt:
+    name: nodejs
+    state: present
+
+- name: create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: frontend
+    group: frontend
+    mode: 0775
+  with_items:
+    - /var/sausage-store/reports # рпеорты
+    - /var/sausage-store/logs # дефолтные логи
+    - /opt/sausage-store/bin # здесь будем хранить джарник
+    - /opt/log # outputs
+
+- name: Create File 
+  file:
+    path: "{{item}}"
+    state: touch
+    owner: frontend
+    group: frontend
+    mode: 0644
+  with_items:
+    - /opt/log/backend_out.log # вывод StandartOutput сервиса
+    - /opt/log/sausage-store-backend.log # вывод StandartError сервиса
