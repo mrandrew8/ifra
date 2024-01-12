@@ -46,7 +46,7 @@
 - name: FIX DNS to resolve nexus
   become: true
   ansible.builtin.copy:
-    src: /files/resolved.conf
+    src: /home/student/ansible2/infrastructure/ansible/files/resolved.conf
     dest: /etc/systemd/resolved.conf
     mode: '0644'
   register: dns_fix
