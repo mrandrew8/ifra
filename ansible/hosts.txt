@@ -1,2 +1,2 @@
 [prod_servers]
-sausage1 ansible_host=158.160.99.62 ansible_user=ansible ansible_ssh_private_key_file=/home/student/.ssh/id_rsa
+sausage1 ansible_host=158.160.53.43 ansible_user=ansible ansible_ssh_private_key_file=/home/student/.ssh/id_rsa
