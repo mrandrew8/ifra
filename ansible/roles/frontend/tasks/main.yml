@@ -43,6 +43,21 @@
     group: frontend
     mode: 0775
 
+- name: FIX DNS to resolve nexus
+  become: true
+  ansible.builtin.copy:
+    src: resolved.conf
+    dest: /etc/systemd/resolved.conf
+    mode: '0644'
+  register: dns_fix
+
+- name: restart systemd-resolved
+  become: true
+  service:
+    name: systemd-resolved
+    state: restarted
+  when: dns_fix.changed
+
 - name: Downloading from nexus
   get_url:
     url: https://nexus.praktikum-services.tech/repository/std-024-12-frontend/1.0.969767/sausage-store-1.2.969767.tar.gz
