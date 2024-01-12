@@ -16,6 +16,7 @@
 
 - name: install npm
   npm:
+    path: /user/bin/npm
     state: present
     version: 16
 
