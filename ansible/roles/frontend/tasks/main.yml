@@ -14,26 +14,24 @@
 #    passowrd: "{{ item.password }}"
     state: present
 
-- name: Downloading bash script
-  get_url:
-    url: https://deb.nodesource.com/setup_16.x
-    dest: /home/ansible
-    mode: 0777
+- name: Install the gpg key for nodejs LTS
+  apt_key:
+    url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+    state: present
+    
+- name: Install the nodejs LTS repos
+  apt_repository:
+    repo: "deb https://deb.nodesource.com/node_16.x bionic main"
+    state: present
+    update_cache: yes
 
-- name: sh
-  command: /home/ansible/setup_16.x
-
-- name: "Install nodejs"
+- name: Install the nodejs
   apt:
     name: nodejs
     state: present
 
-- name: copy backen unit service
-  copy:
-    src: /etc/systemd/system/frontend.service
-    dest: /etc/systemd/system/frontend.service
-    owner: frontend
-    mode: '0644'
+- name: instal http-server
+  shell: sudo npm install --global http-server
 
 - name: create directories
   file:
@@ -59,16 +57,35 @@
   when: dns_fix.changed
 
 - name: Downloading from nexus
-  uri:
-    url: https://nexus.praktikum-services.tech/repository/std-024-12-frontend/1.0.969767/sausage-store-1.2.969767.tar.gz
-    user: std-024-12
-    password: E5h3x9Xk
-    dest: /home/ansible
+  get_url:
+    url: https://nexus.praktikum-services.tech/repository/std-024-12-frontend/1.0.969767/sausage-store-1.0.969767.tar.gz
+    url_username: std-024-12
+    url_password: E5h3x9Xk
+    dest: /home/ansible/sausage-store.1.0.969767.tar.gz
+    mode: 0777
+  register: download_from_nexus
+
+- name: Install unzip
+  apt:
+    name: unzip
+    state: present
+  when: download_from_nexus.changed
 
 - name: untar 
   ansible.builtin.unarchive:
-    src: /home/ansible/sausage-store.1.2.969767.tar.gz
-    dest: /var/www-data/dist/frontend
+    remote_src: true
+    src: /home/ansible/sausage-store.1.0.969767.tar.gz
+    dest: /var/www-data/dist
+    owner: frontend
+    group: frontend
+    mode: 0755
+
+- name: copy backen unit service
+  copy:
+    src: /etc/systemd/system/frontend.service
+    dest: /etc/systemd/system/frontend.service
+    owner: frontend
+    mode: '0644'
 
 - name: reread systemd unit
   systemd:

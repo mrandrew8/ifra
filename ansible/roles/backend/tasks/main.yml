@@ -14,6 +14,21 @@
 #    passowrd: "{{ item.password }}"
     state: present
 
+- name: FIX DNS to resolve nexus
+  become: true
+  ansible.builtin.copy:
+    src: /home/student/ansible2/infrastructure/ansible/files/resolved.conf
+    dest: /etc/systemd/resolved.conf
+    mode: '0644'
+  register: dns_fix
+
+- name: restart systemd-resolved
+  become: true
+  service:
+    name: systemd-resolved
+    state: restarted
+  when: dns_fix.changed
+
 - name: create directories
   file:
     path: "{{ item }}"
