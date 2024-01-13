@@ -75,7 +75,7 @@
 - name: maven_artifact for downloading package from Nexus
   maven_artifact:
     dest: "/opt/sausage-store/bin/sausage-store.jar"
-    repository_url: "https://nexus.praktikum-services.tech/repository/sausage-store/std-024-12-backend2"
+    repository_url: "https://nexus.praktikum-services.tech/repository/std-024-12-backend2"
     group_id: "com.yandex.practicum.devops"
     artifact_id: "sausage-store"
     version: "1.0.976252"
