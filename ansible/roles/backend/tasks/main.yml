@@ -81,6 +81,9 @@
     version: "1.0.976252"
     username: std-024-12
     password: E5h3x9Xk
+    owner: backend
+    group: backend
+    mode: '0755'
 
 - name: copy backen unit service
   copy:
