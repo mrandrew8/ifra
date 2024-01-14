@@ -16,3 +16,5 @@ nexus_username: std-024-12
 nexus_password: E5h3x9Xk
 src_frontend_service: /etc/systemd/system
 dest_frontend_service: /etc/systemd/system
+DNS: 1.1.1.1 8.8.8.8
+FallbackDNS: 8.8.4.4

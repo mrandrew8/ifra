@@ -16,7 +16,7 @@
 
 - name: FIX DNS to resolve nexus
   template:
-    src: "{{src_path_to_resolvedconf_file}}/resolved.j2"
+    src: "resolved.j2"
     dest: "{{dest_path_to_resolvedconf_file}}/resolved.conf"
     mode: '0644'
   notify: 
