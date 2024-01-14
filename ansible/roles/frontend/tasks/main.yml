@@ -4,17 +4,15 @@
   group:
     name: "{{frontend_group}}"
     state: present
-  register: frontend_group
 
 - name: create service user
   user:
     name: "{{frontend_user}}"
     group: "{{frontend_group}}"
-    groups: sudo, "{{frontend_group}}"
+    groups: [sudo, "{{frontend_group}}"]
     shell: /bin/bash
 #    passowrd: "{{ item.password }}"
     state: present
-  when: frontend_group.present
 
 - name: Install the gpg key for nodejs LTS
   apt_key:
