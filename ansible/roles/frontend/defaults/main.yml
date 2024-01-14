@@ -12,7 +12,7 @@ name_frontend_service: frontend.service
 gpg_key_for_nodejs: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
 nodejs_repo: deb https://deb.nodesource.com/node_16.x bionic main
 frontend_files_path: /var/www-data/dist/frontend
-src_path_to_resolvedconf_file: /home/student/ansible2/infrastructure/ansible/files/resolved.conf
-dest_path_to_resolvedconf_file: /etc/systemd/resolved.conf
+src_path_to_resolvedconf_file: /home/student/ansible2/infrastructure/ansible/files
+dest_path_to_resolvedconf_file: /etc/systemd
 dest_path_to_downloading_from_nexus : /home/ansible/sausage-store.1.0.969767.tar.gz
 path_to_untar: /var/www-data/dist
