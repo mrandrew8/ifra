@@ -5,7 +5,13 @@ frontend_group: frontend
 owner_frontend_service: frontend
 nexus_url_frontend: https://nexus.praktikum-services.tech/repository/std-024-12-frontend/1.0.969767/sausage-store-1.0.969767.tar.gz
 nexus_username: std-024-12
-nexus_password: E5h3x9Xk
+nexus_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          39633630306237333639643264633237383831356262646464353838366562306666633437343238
+          3136666637663461363262653065343234306662316432620a343665356634613965633634386335
+          31326539636436393030636435313562343039383664616463373261666536383532653266396637
+          6666643562663566650a623131373132313630663338623332366662383562313566303639336165
+          3731
 dest_frontend_service: /etc/systemd/system
 src_frontend_service: /etc/systemd/system
 name_frontend_service: frontend.service
