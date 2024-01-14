@@ -77,7 +77,7 @@
     mode: '0755'
 
 - name: copy backen unit service
-  copy:
+  template:
     src: "backend.service.j2"
     dest: "{{dest_frontend_service}}/backend.service"
     owner: "{{owner_backend_service}}"
