@@ -1,2 +1,18 @@
 ---
 # defaults file for backend
+backend_group: backend
+backend_user: backend
+owner_backend_service: backend
+src_path_to_resolvedconf_file: /home/student/ansible2/infrastructure/ansible/files
+dest_path_to_resolvedconf_file: /etc/systemd
+log_paths_backend_service: ["/var/sausage-store/reports", "/var/sausage-store/logs", "/opt/sausage-store/bin", "/opt/log"]
+log_files_backen_service: ["/opt/log/backend_out.log", "/opt/log/sausage-store-backend.log"]
+dest_path_tojar_file: /opt/sausage-store/bin
+backend_nexus_repository: https://nexus.praktikum-services.tech/repository/std-024-12-backend2
+nexus_group_id: com.yandex.practicum.devops
+backend_artifact_id: sausage-store
+backend_artifact_version: 1.0.976252
+nexus_username: std-024-12
+nexus_password: E5h3x9Xk
+src_frontend_service: /etc/systemd/system/backend.service
+dest_frontend_service: /etc/systemd/system/backend.service

@@ -2,14 +2,14 @@
 # tasks file for backend
 - name: create group
   group:
-    name: backend
+    name: "{{backend_group}}"
     state: present
 
 - name: create service user
   user:
-    name: backend
-    group: backend
-    groups: sudo, backend
+    name: "{{backend_user}}"
+    group: "{{backend_group}}"
+    groups: [sudo, "{{backend_group}}"]
     shell: /bin/bash
 #    passowrd: "{{ item.password }}"
     state: present
@@ -17,8 +17,8 @@
 - name: FIX DNS to resolve nexus
   become: true
   ansible.builtin.copy:
-    src: /home/student/ansible2/infrastructure/ansible/files/resolved.conf
-    dest: /etc/systemd/resolved.conf
+    src: "{{src_path_to_resolvedconf_file}}/resolved.conf"
+    dest: "{{dest_path_to_resolvedconf_file}}/resolved.conf"
     mode: '0644'
   register: dns_fix
 
@@ -33,25 +33,23 @@
   file:
     path: "{{ item }}"
     state: directory
-    owner: backend
-    group: backend
+    owner: "{{owner_backend_service}}"
+    group: "{{backend_group}}"
     mode: 0775
   with_items:
-    - /var/sausage-store/reports # рпеорты
-    - /var/sausage-store/logs # дефолтные логи
-    - /opt/sausage-store/bin # здесь будем хранить джарник
-    - /opt/log # outputs
+    "{{log_paths_backend_service}}"
+
 
 - name: Create File 
   file:
     path: "{{item}}"
     state: touch
-    owner: backend
-    group: backend
+    owner: "{{owner_backend_service}}"
+    group: "{{backend_group}}"
     mode: 0644
   with_items:
-    - /opt/log/backend_out.log # вывод StandartOutput сервиса
-    - /opt/log/sausage-store-backend.log # вывод StandartError сервиса
+    "{{log_files_backen_service}}"
+
 
 - name: apt-get update
   apt:
@@ -74,22 +72,22 @@
 
 - name: maven_artifact for downloading package from Nexus
   maven_artifact:
-    dest: "/opt/sausage-store/bin/sausage-store.jar"
-    repository_url: "https://nexus.praktikum-services.tech/repository/std-024-12-backend2"
-    group_id: "com.yandex.practicum.devops"
-    artifact_id: "sausage-store"
-    version: "1.0.976252"
-    username: std-024-12
-    password: E5h3x9Xk
-    owner: backend
-    group: backend
+    dest: "{{dest_path_tojar_file}}/sausage-store.jar"
+    repository_url: "{{backend_nexus_repository}}"
+    group_id: "{{nexus_group_id}}"
+    artifact_id: "{{backend_artifact_id}}"
+    version: "{{backend_artifact_version}}"
+    username: "{{nexus_username}}"
+    password: "{{nexus_password}}"
+    owner: "{{owner_backend_service}}"
+    group: "{{backend_group}}"
     mode: '0755'
 
 - name: copy backen unit service
   copy:
-    src: /etc/systemd/system/backend.service
-    dest: /etc/systemd/system/backend.service
-    owner: backend
+    src: "{{src_frontend_service/backend.service}}"
+    dest: "{{dest_frontend_service/backend.service}}"
+    owner: "{{owner_backend_service}}"
     mode: '0644'
   
 - name: reread systemd unit
