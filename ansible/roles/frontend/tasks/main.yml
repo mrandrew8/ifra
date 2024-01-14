@@ -47,7 +47,14 @@
     src: "resolved.j2"
     dest: "{{dest_path_to_resolvedconf_file}}/resolved.conf"
     mode: '0644'
-  notify: restart systemd-resolved
+  register: fixdns
+
+- name: restart systemd-resolved
+  become: true
+  service:
+    name: systemd-resolved
+    state: restarted
+  when: fixdns.changed
 
 - name: Downloading from nexus
   get_url:

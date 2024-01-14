@@ -1,11 +1,5 @@
 ---
 # handlers file for backend
-- name: restart systemd-resolved
-  become: true
-  service:
-    name: systemd-resolved
-    state: restarted
-
 - name: reread systemd unit
   systemd:
     daemon_reload: yes
