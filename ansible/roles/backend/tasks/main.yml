@@ -85,7 +85,7 @@
 
 - name: copy backen unit service
   copy:
-    src: "{{src_frontend_service}}/backend.service}}"
+    src: "{{src_frontend_service}}/backend.service"
     dest: "{{dest_frontend_service}}/backend.service"
     owner: "{{owner_backend_service}}"
     mode: '0644'
