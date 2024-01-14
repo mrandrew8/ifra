@@ -71,9 +71,9 @@
     group: "{{frontend_group}}"
     mode: 0755
 
-- name: copy backen unit service
-  copy:
-    src: "{{dest_frontend_service}}/frontend.service"
+- name: copy frontend unit service
+  template:
+    src: "frontend.service.j2"
     dest: "{{src_frontend_service}}/frontend.service"
     owner: "{{owner_frontend_service}}"
     mode: '0644'
