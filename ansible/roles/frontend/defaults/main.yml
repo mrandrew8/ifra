@@ -1,2 +1,10 @@
 ---
 # defaults file for frontend
+frontend_user: frontend
+frontend_group: frontend
+owner_frontend_service: frontend
+nexus_username: std-024-12
+nexus_password: E5h3x9Xk
+dest_frontend_service: /etc/systemd/system
+src_frontend_service: /etc/systemd/system
+name_frontend_service: frontend.service
