@@ -2,14 +2,14 @@
 # tasks file for frontend
 - name: create group
   group:
-    name: {{frontend_group}}
+    name: "{{frontend_group}}"
     state: present
 
 - name: create service user
   user:
-    name: {{frontend}}
-    group: {{frontend_group}}
-    groups: sudo, {{frontend_group}}
+    name: "{{frontend}}"
+    group: "{{frontend_group}}"
+    groups: sudo, "{{frontend_group}}"
     shell: /bin/bash
 #    passowrd: "{{ item.password }}"
     state: present
@@ -38,7 +38,7 @@
     path: /var/www-data/dist/frontend
     state: directory
     owner: frontend
-    group: {{frontend_group}}
+    group: "{{frontend_group}}"
     mode: 0775
 
 - name: FIX DNS to resolve nexus
@@ -77,7 +77,7 @@
     src: /home/ansible/sausage-store.1.0.969767.tar.gz
     dest: /var/www-data/dist
     owner: frontend
-    group: {{frontend_group}}
+    group: "{{frontend_group}}"
     mode: 0755
 
 - name: copy backen unit service
