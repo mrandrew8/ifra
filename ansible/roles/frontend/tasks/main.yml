@@ -16,12 +16,12 @@
 
 - name: Install the gpg key for nodejs LTS
   apt_key:
-    url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+    url: "{{gpg_key_for_nodejs}}"
     state: present
     
 - name: Install the nodejs LTS repos
   apt_repository:
-    repo: "deb https://deb.nodesource.com/node_16.x bionic main"
+    repo: "{{nodejs_repo}}"
     state: present
     update_cache: yes
 
@@ -35,17 +35,17 @@
 
 - name: create directories
   file:
-    path: /var/www-data/dist/frontend
+    path: "{{frontend_files_path}}"
     state: directory
-    owner: frontend
+    owner: "{{owner_frontend_service}}"
     group: "{{frontend_group}}"
     mode: 0775
 
 - name: FIX DNS to resolve nexus
   become: true
   ansible.builtin.copy:
-    src: /home/student/ansible2/infrastructure/ansible/files/resolved.conf
-    dest: /etc/systemd/resolved.conf
+    src: "{{path_to_resolvedconf_file}}"
+    dest: "{{dest_path_to_resolvedconf_file}}"
     mode: '0644'
   register: dns_fix
 
@@ -58,10 +58,10 @@
 
 - name: Downloading from nexus
   get_url:
-    url: https://nexus.praktikum-services.tech/repository/std-024-12-frontend/1.0.969767/sausage-store-1.0.969767.tar.gz
-    url_username: std-024-12
-    url_password: E5h3x9Xk
-    dest: /home/ansible/sausage-store.1.0.969767.tar.gz
+    url: "{{nexus_url_frontend}}"
+    url_username: "{{nexus_username}}"
+    url_password: "{{nexus_password}}"
+    dest: "{{dest_path_to_downloading_from_nexus}}"
     mode: 0777
   register: download_from_nexus
 
@@ -74,17 +74,17 @@
 - name: untar 
   ansible.builtin.unarchive:
     remote_src: true
-    src: /home/ansible/sausage-store.1.0.969767.tar.gz
-    dest: /var/www-data/dist
-    owner: frontend
+    src: "{{dest_path_to_downloading_from_nexus}}"
+    dest: "{{path_to_untar}}"
+    owner: "{{owner_frontend_service}}"
     group: "{{frontend_group}}"
     mode: 0755
 
 - name: copy backen unit service
   copy:
-    src: /etc/systemd/system/frontend.service
-    dest: /etc/systemd/system/frontend.service
-    owner: frontend
+    src: "{{dest_frontend_service}}/frontend.service"
+    dest: "{{src_frontend_service}}/frontend.service"
+    owner: "{{owner_frontend_service}}"
     mode: '0644'
 
 - name: reread systemd unit
@@ -93,5 +93,5 @@
 
 - name: starting service
   service:
-    name: frontend.service
+    name: "{{name_frontend_service}}"
     state: started 
