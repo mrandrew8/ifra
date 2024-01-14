@@ -15,9 +15,8 @@
     state: present
 
 - name: FIX DNS to resolve nexus
-  become: true
-  ansible.builtin.copy:
-    src: "{{src_path_to_resolvedconf_file}}/resolved.conf"
+  template:
+    src: "{{source_folder}}/files/resolved.j2"
     dest: "{{dest_path_to_resolvedconf_file}}/resolved.conf"
     mode: '0644'
   notify: 
