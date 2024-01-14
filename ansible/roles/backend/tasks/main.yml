@@ -15,18 +15,19 @@
     state: present
 
 - name: FIX DNS to resolve nexus
-  template:
-    src: "resolved.j2"
-    dest: "{{dest_path_to_resolvedconf_file}}/resolved.conf"
+  become: true
+  ansible.builtin.copy:
+    src: "{{src_path_to_resolvedconf_file}}"
+    dest: /etc/systemd/resolved.conf
     mode: '0644'
-  register: fixdns
+  register: dns_fix
 
 - name: restart systemd-resolved
   become: true
   service:
     name: systemd-resolved
     state: restarted
-  when: fixdns.changed
+  when: dns_fix.changed
 
 - name: create directories
   file:
