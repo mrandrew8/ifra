@@ -20,14 +20,8 @@
     src: "{{src_path_to_resolvedconf_file}}/resolved.conf"
     dest: "{{dest_path_to_resolvedconf_file}}/resolved.conf"
     mode: '0644'
-  register: dns_fix
-
-- name: restart systemd-resolved
-  become: true
-  service:
-    name: systemd-resolved
-    state: restarted
-  when: dns_fix.changed
+  notify: 
+    - restart systemd-resolved
 
 - name: create directories
   file:

@@ -47,14 +47,7 @@
     src: "{{src_path_to_resolvedconf_file}}/resolved.conf"
     dest: "{{dest_path_to_resolvedconf_file}}/resolved.conf"
     mode: '0644'
-  register: dns_fix
-
-- name: restart systemd-resolved
-  become: true
-  service:
-    name: systemd-resolved
-    state: restarted
-  when: dns_fix.changed
+  notify: restart systemd-resolved
 
 - name: Downloading from nexus
   get_url:
@@ -63,13 +56,11 @@
     url_password: "{{nexus_password}}"
     dest: "{{dest_path_to_downloading_from_nexus}}"
     mode: 0777
-  register: download_from_nexus
 
 - name: Install unzip
   apt:
     name: unzip
     state: present
-  when: download_from_nexus.changed
 
 - name: untar 
   ansible.builtin.unarchive:
@@ -86,12 +77,7 @@
     dest: "{{src_frontend_service}}/frontend.service"
     owner: "{{owner_frontend_service}}"
     mode: '0644'
+  notify:
+    - reread systemd unit
+    - starting service
 
-- name: reread systemd unit
-  systemd:
-    daemon_reload: yes
-
-- name: starting service
-  service:
-    name: "{{name_frontend_service}}"
-    state: started 
