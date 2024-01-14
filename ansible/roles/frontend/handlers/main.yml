@@ -9,8 +9,10 @@
 - name: reread systemd unit
   systemd:
     daemon_reload: yes
+    listen: "reread and restar"
 
 - name: starting service frontend
   service:
     name: "{{name_frontend_service}}"
     state: restarted 
+    listen: "reread and restar"
