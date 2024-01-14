@@ -33,6 +33,9 @@
 - name: instal http-server
   shell: sudo npm install --global http-server
 
+- name: Open port 90 for hhtp-server  
+  shell: sudo setcap 'cap_net_bind_service=+ep' /usr/bin/node
+
 - name: create directories
   file:
     path: "{{frontend_files_path}}"
