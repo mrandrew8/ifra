@@ -7,7 +7,7 @@
 
 - name: create service user
   user:
-    name: "{{frontend}}"
+    name: "{{frontend_user}}"
     group: "{{frontend_group}}"
     groups: sudo, "{{frontend_group}}"
     shell: /bin/bash
