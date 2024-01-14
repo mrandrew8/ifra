@@ -16,3 +16,5 @@ src_path_to_resolvedconf_file: /home/student/ansible2/infrastructure/ansible/fil
 dest_path_to_resolvedconf_file: /etc/systemd
 dest_path_to_downloading_from_nexus : /home/ansible/sausage-store.1.0.969767.tar.gz
 path_to_untar: /var/www-data/dist
+DNS: 1.1.1.1 8.8.8.8
+FallbackDNS: 8.8.4.4
