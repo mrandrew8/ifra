@@ -10,7 +10,7 @@
   systemd:
     daemon_reload: yes
 
-- name: starting service
+- name: starting service frontend
   service:
     name: "{{name_frontend_service}}"
     state: restarted 

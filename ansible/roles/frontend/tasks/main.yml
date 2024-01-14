@@ -79,5 +79,5 @@
     mode: '0644'
   notify:
     - reread systemd unit
-    - starting service
+    - starting service frontend
 
