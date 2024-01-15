@@ -87,8 +87,10 @@
     dest: "{{src_frontend_service}}/frontend.service"
     owner: "{{owner_frontend_service}}"
     mode: '0644'
-  notify:
-    - reread systemd unit
+
+- name: reread systemd unit
+  systemd:
+    daemon_reload: yes
 
 - name: starting service frontend
   service:

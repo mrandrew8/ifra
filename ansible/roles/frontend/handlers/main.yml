@@ -1,10 +1,2 @@
 ---
 # handlers file for frontend
-- name: reread systemd unit
-  systemd:
-    daemon_reload: yes
-
-- name: starting service frontend
-  service:
-    name: "{{name_frontend_service}}"
-    state: restarted 

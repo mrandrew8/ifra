@@ -89,6 +89,12 @@
     dest: "{{dest_frontend_service}}/backend.service"
     owner: "{{owner_backend_service}}"
     mode: '0644'
-  notify:
-    - reread systemd unit
-    - starting service
+
+- name: reread systemd unit
+  systemd:
+    daemon_reload: yes
+
+- name: starting service
+  service:
+    name: backend.service
+    state: restarted 

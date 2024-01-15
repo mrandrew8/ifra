@@ -1,10 +1,2 @@
 ---
 # handlers file for backend
-- name: reread systemd unit
-  systemd:
-    daemon_reload: yes
-
-- name: starting service
-  service:
-    name: backend.service
-    state: restarted 
