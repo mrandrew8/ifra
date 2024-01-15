@@ -89,5 +89,9 @@
     mode: '0644'
   notify:
     - reread systemd unit
-    - starting service frontend
+
+- name: starting service frontend
+  service:
+    name: "{{name_frontend_service}}"
+    state: started 
 
