@@ -29,7 +29,7 @@ deploy-kubernetes:
     - ssh ${DEV_USER}@${DEV_HOST} "kubectl apply -f /home/student/sausage-store2/kubernetes/backend;
       kubectl apply -f /home/student/sausage-store2/kubernetes/backend-report;
       kubectl apply -f /home/student/sausage-store2/kubernetes/frontend;"
-    - ssh ${DEV_USER}@${DEV_HOST} "rm -f ~/.kube/config"
+#    - ssh ${DEV_USER}@${DEV_HOST} "rm -f ~/.kube/config" удалять не надо
   
   environment:
     name: sausage-store-url
