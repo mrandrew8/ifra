@@ -1,0 +1,29 @@
+---
+# defaults file for frontend
+frontend_user: frontend
+frontend_group: frontend
+owner_frontend_service: frontend
+nexus_url_frontend: https://nexus.praktikum-services.tech/repository/std-024-12-frontend/1.0.969767/sausage-store-1.0.969767.tar.gz
+nexus_username: std-024-12
+nexus_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          39633630306237333639643264633237383831356262646464353838366562306666633437343238
+          3136666637663461363262653065343234306662316432620a343665356634613965633634386335
+          31326539636436393030636435313562343039383664616463373261666536383532653266396637
+          6666643562663566650a623131373132313630663338623332366662383562313566303639336165
+          3731
+dest_frontend_service: /etc/systemd/system
+src_frontend_service: /etc/systemd/system
+name_frontend_service: frontend.service
+gpg_key_for_nodejs: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+nodejs_repo: deb https://deb.nodesource.com/node_16.x bionic main
+frontend_files_path: /var/www-data/dist/frontend
+src_path_to_resolvedconf_file: /home/student/ansible2/infrastructure/ansible/files
+dest_path_to_resolvedconf_file: /etc/systemd
+dest_path_to_downloading_from_nexus : /home/ansible/sausage-store.1.0.969767.tar.gz
+path_to_untar: /var/www-data/dist
+DNS: 1.1.1.1 8.8.8.8
+FallbackDNS: 8.8.4.4
+port1: 80
+proxy_server: http://localhost
+port2: 8080

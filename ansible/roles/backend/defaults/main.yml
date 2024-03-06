@@ -1,0 +1,26 @@
+---
+# defaults file for backend
+backend_group: backend
+backend_user: backend
+owner_backend_service: backend
+src_path_to_resolvedconf_file: /home/student/ansible2/infrastructure/ansible/files
+dest_path_to_resolvedconf_file: /etc/systemd
+log_paths_backend_service: ["/var/sausage-store/reports", "/var/sausage-store/logs", "/opt/sausage-store/bin", "/opt/log"]
+log_files_backen_service: ["/opt/log/backend_out.log", "/opt/log/sausage-store-backend.log"]
+dest_path_tojar_file: /opt/sausage-store/bin
+backend_nexus_repository: https://nexus.praktikum-services.tech/repository/std-024-12-backend2
+nexus_group_id: com.yandex.practicum.devops
+backend_artifact_id: sausage-store
+backend_artifact_version: 1.0.976252
+nexus_username: std-024-12
+nexus_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          39633630306237333639643264633237383831356262646464353838366562306666633437343238
+          3136666637663461363262653065343234306662316432620a343665356634613965633634386335
+          31326539636436393030636435313562343039383664616463373261666536383532653266396637
+          6666643562663566650a623131373132313630663338623332366662383562313566303639336165
+          3731
+src_frontend_service: /etc/systemd/system
+dest_frontend_service: /etc/systemd/system
+DNS: 1.1.1.1 8.8.8.8
+FallbackDNS: 8.8.4.4

@@ -1,0 +1,19 @@
+[Unit]
+Description=backend service
+After=network.target
+
+[Service]
+Type=exec
+
+User={{backend_user}}
+
+Environment=REPORT_PATH={{log_paths_backend_service[0]}}
+Environment=LOG_PATH={{log_paths_backend_service[1]}}
+
+ExecStart=java -jar {{dest_path_tojar_file}}/sausage-store.jar
+
+StandardOutput=file:{{log_files_backen_service[0]}}
+StandardError=file:{{log_files_backen_service[1]}}
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,8 @@
+---
+- name: backend 
+  hosts: all
+  become: yes
+
+  roles:
+    - backend
+    - frontend

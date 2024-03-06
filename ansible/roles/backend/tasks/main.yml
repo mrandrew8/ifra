@@ -1,0 +1,100 @@
+---
+# tasks file for backend
+- name: create group
+  group:
+    name: "{{backend_group}}"
+    state: present
+
+- name: create service user
+  user:
+    name: "{{backend_user}}"
+    group: "{{backend_group}}"
+    groups: [sudo, "{{backend_group}}"]
+    shell: /bin/bash
+#    passowrd: "{{ item.password }}"
+    state: present
+
+- name: FIX DNS to resolve nexus
+  become: true
+  ansible.builtin.copy:
+    src: "{{src_path_to_resolvedconf_file}}/resolved.conf"
+    dest: /etc/systemd/resolved.conf
+    mode: '0644'
+  register: dns_fix
+
+- name: restart systemd-resolved
+  become: true
+  service:
+    name: systemd-resolved
+    state: restarted
+  when: dns_fix.changed
+
+- name: create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{owner_backend_service}}"
+    group: "{{backend_group}}"
+    mode: 0775
+  with_items:
+    "{{log_paths_backend_service}}"
+
+
+- name: Create File 
+  file:
+    path: "{{item}}"
+    state: touch
+    owner: "{{owner_backend_service}}"
+    group: "{{backend_group}}"
+    mode: 0644
+  with_items:
+    "{{log_files_backen_service}}"
+
+
+- name: apt-get update
+  apt:
+    update_cache: yes
+
+- name: instaling latest version openjdk-16-jdk 
+  apt:
+    name: openjdk-16-jdk
+    state: latest
+    install_recommends: no
+
+- name: Install PIP
+  apt: 
+    name=python3-pip 
+    state=present
+
+- name: Install lxml
+  pip: 
+    name=lxml
+
+- name: maven_artifact for downloading package from Nexus
+  maven_artifact:
+    dest: "{{dest_path_tojar_file}}/sausage-store.jar"
+    repository_url: "{{backend_nexus_repository}}"
+    group_id: "{{nexus_group_id}}"
+    artifact_id: "{{backend_artifact_id}}"
+    version: "{{backend_artifact_version}}"
+    username: "{{nexus_username}}"
+    password: "{{nexus_password}}"
+    owner: "{{owner_backend_service}}"
+    group: "{{backend_group}}"
+    mode: '0755'
+
+- name: copy backen unit service
+  template:
+    src: "backend.service.j2"
+    dest: "{{dest_frontend_service}}/backend.service"
+    owner: "{{owner_backend_service}}"
+    mode: '0644'
+
+- name: reread systemd unit
+  systemd:
+    daemon_reload: yes
+
+- name: starting service
+  service:
+    name: backend.service
+    state: restarted 
