@@ -9,7 +9,7 @@ deploy-kubernetes:
   stage: deploy
   only:
     changes: 
-    - kubernetes/**/* #триггер для запуска пайплайна - изменения в директории kubernetes (рекурссивно)
+    - kubernetes/* #триггер для запуска пайплайна - изменения в директории kubernetes (рекурссивно)
   image: alpine:3.18
   before_script:
     - apk add gettext
