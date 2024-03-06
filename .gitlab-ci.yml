@@ -20,6 +20,7 @@ deploy-kubernetes:
     - chmod 700 ~/.ssh
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
+    - mkdir -p ~/.kube/
     - echo "$kubeconfig" >> ~/.kube/config #создаем конфиг куба из меременной гитлаба
   script:    
     - ssh ${DEV_USER}@${DEV_HOST} "mkdir -p /home/student/sausage-store2"
