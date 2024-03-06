@@ -1,0 +1,28 @@
+В Главе 8 вы готовили образ контейнера фронтенда с помощью nginx-proxy. Теперь возьмём на вооружение сервисы Kubernetes (Service) и в контейнере с фронтендом сможем использовать простой http-сервер (Nginx или http-server из пакетов npm).
+Соберите образ фронтенда на основе образа Nginx. Можно разбить сборку на две стадии — компиляция npm-артефактов и копирование в целевой образ:
+FROM node:16 as build
+
+<build npm files>
+
+FROM nginx:latest
+
+<copy files from build>
+
+EXPOSE 8080 
+
+
+Создайте ConfigMap с конфигурацией Nginx для фронтенда сосисочной. Запросы к /api нужно проксировать на бэкенд сосисочной:
+server {
+
+  listen 8080;
+
+  location / {
+    root   /usr/share/nginx/html;
+    index  index.html;
+    try_files $uri $uri/ /index.html;
+  }
+
+  location /api {
+      proxy_pass http://backend:8080;
+  }
+} 
