@@ -15,6 +15,7 @@ deploy-kubernetes:
     - apk add gettext
     - apk add openssh-client bash
     - apk add curl
+    - apk add sudo
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
