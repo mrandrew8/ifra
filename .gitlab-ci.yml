@@ -22,13 +22,17 @@ deploy-kubernetes:
     - chmod 644 ~/.ssh/known_hosts
     - mkdir -p ~/.kube/
     - echo "$kubeconfig" >> ~/.kube/config #создаем конфиг куба из меременной гитлаба
-  script:    
-    - ssh ${DEV_USER}@${DEV_HOST} "mkdir -p /home/student/sausage-store2"
-    - scp -r kubernetes ${DEV_USER}@${DEV_HOST}:/home/student/sausage-store2/
-    - scp -r ~/.kube/config ${DEV_USER}@${DEV_HOST}:~/.kube/config
-    - ssh ${DEV_USER}@${DEV_HOST} "kubectl apply -f /home/student/sausage-store2/kubernetes/backend;
-      kubectl apply -f /home/student/sausage-store2/kubernetes/backend-report;
-      kubectl apply -f /home/student/sausage-store2/kubernetes/frontend;"
+    - curl -LO https://dl.k8s.io/release/`curl -LS https://dl.k8s.io/release/stable.txt`/bin/linux/amd64/kubectl
+    - chmod +x ./kubectl
+    - sudo mv ./kubectl /usr/local/bin/kubectl
+    - kubectl version --client
+  script:   
+    - ls 
+    # - mkdir -p /sausage-store2
+    # - scp -r kubernetes /sausage-store2/
+    - kubectl apply -f /kubernetes/backend
+    - kubectl apply -f /kubernetes/backend-report
+    - kubectl apply -f /kubernetes/frontend
 #    - ssh ${DEV_USER}@${DEV_HOST} "rm -f ~/.kube/config" удалять не надо
   
   environment:
