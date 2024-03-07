@@ -13,7 +13,7 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxUnavailable: 0 #максимальное количество одновременно неработающих Pod'ов в процессе обновления
+      maxUnavailable: 1 #максимальное количество одновременно неработающих Pod'ов в процессе обновления
       maxSurge: 20% #максимальное количество Pod'ов, которое может быть создано сверх указанного количества Pod'ов
   selector:
     matchLabels:
