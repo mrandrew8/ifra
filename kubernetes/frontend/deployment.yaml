@@ -21,11 +21,12 @@ spec:
         app: frontend
     spec:
       affinity:
-        podAntiAffinity:
-           requiredDuringSchedulingIgnoredDuringExecution:
-             - labelSelector:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            — weight: 80
+              preference:
                  matchExpressions:
-                   - key: "app"
+                   - key: app
                      operator: in
                      values:
                      - frontend # узнал верный label при помощи kubectl describe node/пробежаться по нодам | grep Label
