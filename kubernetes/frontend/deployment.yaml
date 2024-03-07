@@ -27,7 +27,7 @@ spec:
               preference:
                 matchExpressions:
                   - key: app
-                    operator: in
+                    operator: In
                     values:
                     - frontend # узнал верный label при помощи kubectl describe node/пробежаться по нодам | grep Label
       containers:
