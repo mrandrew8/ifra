@@ -20,6 +20,15 @@ spec:
       labels:
         app: frontend
     spec:
+      affinity:
+        podAntiAffinity:
+           requiredDuringSchedulingIgnoredDuringExecution:
+             - labelSelector:
+                 matchExpressions:
+                   - key: "app"
+                     operator: =
+                     values:
+                     - frontend # узнал верный label при помощи kubectl describe node/пробежаться по нодам | grep Label
       containers:
         - name: frontend
           image: gitlab.praktikum-services.ru:5050/std-024-12/sausage-store2/sausage-frontend:latest
