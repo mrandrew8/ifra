@@ -32,9 +32,9 @@ deploy-kubernetes:
     - ls 
     # - mkdir -p /sausage-store2
     # - scp -r kubernetes /sausage-store2/
-    - kubectl apply -f /kubernetes/backend
-    - kubectl apply -f /kubernetes/backend-report
-    - kubectl apply -f /kubernetes/frontend
+    - kubectl apply -f kubernetes/backend
+    - kubectl apply -f kubernetes/backend-report
+    - kubectl apply -f kubernetes/frontend
 #    - ssh ${DEV_USER}@${DEV_HOST} "rm -f ~/.kube/config" удалять не надо
   
   environment:
