@@ -1,1 +1,55 @@
+---
+apiVersion: apps/v1
+kind: Deployment # тип сущности
+metadata: # метаданные
+  name: backend-{{ .Release.Name }}
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  replicas: {{  .Values.backend.deployment.replicas  }}
+  revisionHistoryLimit: {{  .Values.backend.deployment.revisionHistoryLimit  }}
+  # Стратегия развёртывания. Recreate — удалит сначала все старые Pod'ы 
+  # Есть и более гибкая стратегии, например, RollingUpdate, которая будет обновлять Pod'ы порциями  
+  strategy:
+    type: {{  .Values.backend.deployment.strategytype  }}
+    rollingUpdate:
+      maxUnavailable: {{  .Values.backend.deployment.maxUnavailable  }} #максимальное количество одновременно неработающих Pod'ов в процессе обновления
+      maxSurge: {{  .Values.backend.deployment.maxSurge  }} #максимальное количество Pod'ов, которое может быть создано сверх указанного количества Pod'ов
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{  .Values.backend.deployment.image  }} 
+          imagePullPolicy: {{  .Values.backend.deployment.imagePullPolicy  }} # image извлекается всегда
+          env:
+            - name: SPRING_DATASOURCE_USERNAME
+              value: {{  .Values.backend.deployment.SPRING_DATASOURCE_USERNAME  }}
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: {{  .Values.backend.deployment.imagePullPolicy.SPRING_DATASOURCE_PASSWORD  }}
+            - name: SPRING_DATASOURCE_URL
+              value: {{  .Values.backend.deployment.imagePullPolicy.SPRING_DATASOURCE_URL  }}
+            - name: SPRING_DATA_MONGODB_URI
+              value: {{  .Values.backend.deployment.imagePullPolicy.SPRING_DATA_MONGODB_URI  }}
+            - name: SPRING_FLYWAY_BASELINE-ON-MIGRATE
+              value: {{  .Values.backend.deployment.imagePullPolicy.SPRING_FLYWAY_BASELINE-ON-MIGRATE  }}
+          ports:
+            - name: {{ .Chart.Name }}
+              containerPort: {{  .Values.backend.deployment.imagePullPolicy.containerPort  }}
+          livenessProbe:
+            httpGet:
+              path: {{  .Values.backend.deployment.imagePullPolicy.livenessProbe_path  }}
+              port: {{  .Values.backend.deployment.imagePullPolicy.livenessProbe_port  }}
+            initialDelaySeconds: {{  .Values.backend.deployment.imagePullPolicy.initialDelaySeconds  }}
+            periodSeconds: {{  .Values.backend.deployment.imagePullPolicy.periodSeconds  }}
+            timeoutSeconds: {{  .Values.backend.deployment.imagePullPolicy.timeoutSeconds  }}
+            failureThreshold: {{  .Values.backend.deployment.imagePullPolicy.failureThreshold  }}
+      imagePullSecrets:
+       - name: docker-config-secret # Чтобы получить образ из частного реестра, Kubernetes необходимы учетные данные. Поле imagePullSecretsв файле конфигурации указывает, что Kubernetes должен получить учетные данные из секрета с именем docker-config-secret
+
 
