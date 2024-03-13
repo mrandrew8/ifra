@@ -9,7 +9,7 @@ spec:
   type: {{  .Values.backend.service.type  }}
   ports:
     - port: {{  .Values.backend.service.port  }}
-      protocol: {{  .Values.backend.service.TCP  }}
-      targetPort: {{  .Values.backend.service.8080  }}
+      protocol: {{  .Values.backend.service.protocol  }}
+      targetPort: {{  .Values.backend.service.targetPort  }}
   selector:
     app: {{ .Chart.Name }} 
