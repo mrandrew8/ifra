@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}
-        image: {{  .Values.backend_report.deployment.image  }}
+          image: {{  .Values.backend_report.deployment.image  }}
           imagePullPolicy: Always # image извлекается всегда
           env:
             - name: DB
