@@ -46,17 +46,17 @@ spec:
             - name: {{ .Chart.Name }}
               containerPort: {{  .Values.frontend.containerPort  }}
           volumeMounts:
-            - name: {{  .Values.frontend.volumeMounts.name  }}
-              mountPath: {{  .Values.frontend.volumeMounts.mountPath  }}
-              subPath: {{  .Values.frontend.volumeMounts.subPath  }}
+            - name: nginx-conf
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
               readOnly: true
       volumes:
-        - name: {{  .Values.frontend.volumes.name  }}
+        - name: nginx-conf
           configMap:
-            name: {{  .Values.frontend.configMap.name  }}
+            name: nginx-conf
             items:
-              - key: {{  .Values.frontend.configMap.key  }}
-                path: {{  .Values.frontend.configMap.path  }}
+              - key: nginx.conf
+                path: nginx.conf
       imagePullSecrets:
        - name: docker-config-secret # Чтобы получить образ из частного реестра, Kubernetes необходимы учетные данные. Поле imagePullSecretsв файле конфигурации указывает, что Kubernetes должен получить учетные данные из секрета с именем docker-config-secret
 
