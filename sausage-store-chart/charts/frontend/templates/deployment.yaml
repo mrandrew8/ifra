@@ -6,12 +6,12 @@ metadata: # метаданные
   labels:
     app: {{ .Chart.Name }}
 spec:
-  replicas: {{  .Values.frontend.replicas  }}
-  revisionHistoryLimit: {{  .Values.frontend.revisionHistoryLimit  }}
+  replicas: {{  ".Values.frontend.replicas"  }}
+  revisionHistoryLimit: {{  ".Values.frontend.revisionHistoryLimit"  }}
   # Стратегия развёртывания. Recreate — удалит сначала все старые Pod'ы 
   # Есть и более гибкая стратегии, например, RollingUpdate, которая будет обновлять Pod'ы порциями  
   strategy:
-    type: {{  .Values.frontend.strategytype  }}
+    type: {{  ".Values.frontend.strategytype"  }}
   selector:
     matchLabels:
       app: {{ .Chart.Name }}
@@ -29,11 +29,11 @@ spec:
                   - key: app
                     operator: In
                     values:
-                    - {{  .Values.frontend.affinityvalues  }} # узнал верный label при помощи kubectl describe node/пробежаться по нодам | grep Label
+                    - {{  ".Values.frontend.affinityvalues"  }} # узнал верный label при помощи kubectl describe node/пробежаться по нодам | grep Label
       containers:
         - name: {{ .Chart.Name }}
-          image: {{  .Values.frontend.image  }}
-          imagePullPolicy: {{  .Values.frontend.imagePullPolicy  }} # image извлекается всегда
+          image: {{  ".Values.frontend.image"  }}
+          imagePullPolicy: {{  ".Values.frontend.imagePullPolicy"  }} # image извлекается всегда
           # env:
           #   - name: VAULT_HOST
           #     value: 51.250.8.146
@@ -44,19 +44,19 @@ spec:
           #         key: vault_token
           ports:
             - name: {{ .Chart.Name }}
-              containerPort: {{  .Values.frontend.containerPort  }}
+              containerPort: {{  ".Values.frontend.containerPort"  }}
           volumeMounts:
-            - name: {{  .Values.frontend.volumeMounts.name  }}
-              mountPath: {{  .Values.frontend.volumeMounts.mountPath  }}
-              subPath: {{  .Values.frontend.volumeMounts.subPath  }}
+            - name: {{  ".Values.frontend.volumeMounts.name"  }}
+              mountPath: {{  ".Values.frontend.volumeMounts.mountPath"  }}
+              subPath: {{  ".Values.frontend.volumeMounts.subPath"  }}
               readOnly: true
       volumes:
-        - name: {{  .Values.frontend.volumes.name  }}
+        - name: {{  ".Values.frontend.volumes.name"  }}
           configMap:
-            name: {{  .Values.frontend.configMap.name  }}
+            name: {{  ".Values.frontend.configMap.name"  }}
             items:
-              - key: {{  .Values.frontend.configMap.key  }}
-                path: {{  .Values.frontend.configMap.path  }}
+              - key: {{  ".Values.frontend.configMap.key"  }}
+                path: {{  ".Values.frontend.configMap.path"  }}
       imagePullSecrets:
        - name: docker-config-secret # Чтобы получить образ из частного реестра, Kubernetes необходимы учетные данные. Поле imagePullSecretsв файле конфигурации указывает, что Kubernetes должен получить учетные данные из секрета с именем docker-config-secret
 
