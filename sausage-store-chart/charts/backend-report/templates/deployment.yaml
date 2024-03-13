@@ -6,12 +6,12 @@ metadata: # метаданные
   labels:
     app: {{ .Chart.Name }}
 spec:
-  replicas: {{  .Values.backend-report.deployment.replicas  }}
-  revisionHistoryLimit: {{  Values.backend-report.deployment.revisionHistoryLimit  }}
+  replicas: {{  .Values.backend_report.deployment.replicas  }}
+  revisionHistoryLimit: {{  Values.backend_report.deployment.revisionHistoryLimit  }}
   # Стратегия развёртывания. Recreate — удалит сначала все старые Pod'ы 
   # Есть и более гибкая стратегии, например, RollingUpdate, которая будет обновлять Pod'ы порциями  
   strategy:
-    type: {{  .Values.backend-report.deployment.strategytype  }}
+    type: {{  .Values.backend_report.deployment.strategytype  }}
   selector:
     matchLabels:
       app: {{ .Chart.Name }}
@@ -22,11 +22,11 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}
-        image: {{  .Values.backend-report.deployment.image  }}
+        image: {{  .Values.backend_report.deployment.image  }}
           imagePullPolicy: Always # image извлекается всегда
           env:
             - name: DB
-              value: {{  .Values.backend-report.deployment.DB  }}
+              value: {{  .Values.backend_report.deployment.DB  }}
           # env:
           #   - name: VAULT_HOST
           #     value: 51.250.8.146
@@ -37,7 +37,7 @@ spec:
           #         key: vault_token
           ports:
             - name: {{ .Chart.Name }}
-              containerPort: {{  .Values.backend-report.deployment.containerPort  }}
+              containerPort: {{  .Values.backend_report.deployment.containerPort  }}
           # livenessProbe:
           #   httpGet:
           #     path: /actuator/health

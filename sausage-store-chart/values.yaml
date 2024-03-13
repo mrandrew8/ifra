@@ -42,7 +42,7 @@ backend:
     controlledResources: ["cpu", "memory"]
     controlledValues: RequestsAndLimits 
 
-backend-report:
+backend_report:
   app: backend-report
   deployment:
     replicas: 1
