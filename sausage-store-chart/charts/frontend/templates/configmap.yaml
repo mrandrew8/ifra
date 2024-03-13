@@ -38,7 +38,7 @@ data:
           }
           
           location /api {
-              proxy_pass http://{{  .Values.backend.app  }}:{{  .Values.backend.port  }};
+              proxy_pass http://{{  .Values.backend.app  }}-{{  .Release.Name  }}:{{  .Values.backend.port  }};
           }
           error_page   500 502 503 504  /50x.html;
           location = /50x.html {
