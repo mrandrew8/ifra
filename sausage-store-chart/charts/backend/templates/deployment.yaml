@@ -31,24 +31,24 @@ spec:
             - name: SPRING_DATASOURCE_USERNAME
               value: {{  .Values.backend.deployment.SPRING_DATASOURCE_USERNAME  }}
             - name: SPRING_DATASOURCE_PASSWORD
-              value: {{  .Values.backend.deployment.imagePullPolicy.SPRING_DATASOURCE_PASSWORD  }}
+              value: {{  .Values.backend.deployment.SPRING_DATASOURCE_PASSWORD  }}
             - name: SPRING_DATASOURCE_URL
-              value: {{  .Values.backend.deployment.imagePullPolicy.SPRING_DATASOURCE_URL  }}
+              value: {{  .Values.backend.deployment.SPRING_DATASOURCE_URL  }}
             - name: SPRING_DATA_MONGODB_URI
-              value: {{  .Values.backend.deployment.imagePullPolicy.SPRING_DATA_MONGODB_URI  }}
+              value: {{  .Values.backend.deployment.SPRING_DATA_MONGODB_URI  }}
             - name: SPRING_FLYWAY_BASELINE-ON-MIGRATE
-              value: {{  .Values.backend.deployment.imagePullPolicy.SPRING_FLYWAY_BASELINE_ON_MIGRATE  }}
+              value: {{  .Values.backend.deployment.SPRING_FLYWAY_BASELINE_ON_MIGRATE  }}
           ports:
             - name: {{ .Chart.Name }}
-              containerPort: {{  .Values.backend.deployment.imagePullPolicy.containerPort  }}
+              containerPort: {{  .Values.backend.deployment.containerPort  }}
           livenessProbe:
             httpGet:
-              path: {{  .Values.backend.deployment.imagePullPolicy.livenessProbe_path  }}
-              port: {{  .Values.backend.deployment.imagePullPolicy.livenessProbe_port  }}
-            initialDelaySeconds: {{  .Values.backend.deployment.imagePullPolicy.initialDelaySeconds  }}
-            periodSeconds: {{  .Values.backend.deployment.imagePullPolicy.periodSeconds  }}
-            timeoutSeconds: {{  .Values.backend.deployment.imagePullPolicy.timeoutSeconds  }}
-            failureThreshold: {{  .Values.backend.deployment.imagePullPolicy.failureThreshold  }}
+              path: {{  .Values.backend.deployment.livenessProbe_path  }}
+              port: {{  .Values.backend.deployment.livenessProbe_port  }}
+            initialDelaySeconds: {{  .Values.backend.deployment.initialDelaySeconds  }}
+            periodSeconds: {{  .Values.backend.deployment.periodSeconds  }}
+            timeoutSeconds: {{  .Values.backend.deployment.timeoutSeconds  }}
+            failureThreshold: {{  .Values.backend.deployment.failureThreshold  }}
       imagePullSecrets:
        - name: docker-config-secret # Чтобы получить образ из частного реестра, Kubernetes необходимы учетные данные. Поле imagePullSecretsв файле конфигурации указывает, что Kubernetes должен получить учетные данные из секрета с именем docker-config-secret
 
