@@ -12,7 +12,7 @@ spec:
     updateMode: {{  .Values.backend.VPA.updateMode}}
   resourcePolicy:
     containerPolicies:
-      - containerName: {{  .Values.backend.VPA.containerName  }}
+      - containerName: "*"
         minAllowed:
           cpu: {{  .Values.backend.VPA.minAllowed.cpu  }}
           memory: {{  .Values.backend.VPA.minAllowed.memory  }}

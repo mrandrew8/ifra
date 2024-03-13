@@ -30,7 +30,7 @@ backend:
 
   VPA:
     updateMode: "Auto"
-    containerName: "*"
+#    containerName: "*"
     minAllowed:
       cpu: 0m
       memory: 0Mi

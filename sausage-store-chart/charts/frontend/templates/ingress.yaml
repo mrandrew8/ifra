@@ -5,13 +5,13 @@ metadata:
   name: frontend-{{ .Release.Name }}
 spec:
   # В кластере может быть несколько Ingress Controllers, мы используем NGINX
-  ingressClassName: {{  ".Values.frontend.ingress.ingressClassName"  }}
+  ingressClassName: {{  .Values.frontend.ingress.ingressClassName  }}
   tls:
   - hosts:
-    - {{  ".Values.frontend.ingress.host"  }}
+    - {{  .Values.frontend.ingress.host  }}
   rules:
     # Хост определяет правило направления траффика по доменному имени
-  - host: {{  ".Values.frontend.ingress.host"  }}
+  - host: {{  .Values.frontend.ingress.host  }}
     http:
       # Для различных путей в URL можно указать различные бэкенд-сервисы
       paths:
@@ -21,7 +21,7 @@ spec:
           service:
             # Заранее создан сервис типа ClusterIP
             # Он выступает в качестве бэкенда нашего Ingress
-            name: {{  ".Values.frontend.ingress.service_name"  }}
+            name: {{  .Values.frontend.ingress.service_name  }}
             port:
               # У сервиса может быть несколько портов, указываем нужный нам
-              number: {{  ".Values.frontend.ingress.service_port_number"  }}
+              number: {{  .Values.frontend.ingress.service_port_number  }}
