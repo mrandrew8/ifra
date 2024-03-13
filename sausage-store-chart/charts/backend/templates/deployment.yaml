@@ -37,7 +37,7 @@ spec:
             - name: SPRING_DATA_MONGODB_URI
               value: {{  .Values.backend.deployment.imagePullPolicy.SPRING_DATA_MONGODB_URI  }}
             - name: SPRING_FLYWAY_BASELINE-ON-MIGRATE
-              value: {{  .Values.backend.deployment.imagePullPolicy.SPRING_FLYWAY_BASELINE-ON-MIGRATE  }}
+              value: {{  .Values.backend.deployment.imagePullPolicy.SPRING_FLYWAY_BASELINE_ON_MIGRATE  }}
           ports:
             - name: {{ .Chart.Name }}
               containerPort: {{  .Values.backend.deployment.imagePullPolicy.containerPort  }}
