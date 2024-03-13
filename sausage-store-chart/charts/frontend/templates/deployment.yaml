@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment # тип сущности
 metadata: # метаданные
-  name: frontend-{{ .Release.Name }}
+  name: {{ .Chart.Name }}
   labels:
     app: {{ .Chart.Name }}
 spec:
