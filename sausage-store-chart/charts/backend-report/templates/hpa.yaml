@@ -6,8 +6,8 @@ metadata:
   labels:
     app: {{ .Chart.Name }}-hpa
 spec:
-  minReplicas: {{  Values.backend-report.hpa.minReplicas  }}
-  maxReplicas: {{  Values.backend-report.hpa.maxReplicas  }}
+  minReplicas: {{  .Values.backend-report.hpa.minReplicas  }}
+  maxReplicas: {{  .Values.backend-report.hpa.maxReplicas  }}
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
@@ -18,4 +18,4 @@ spec:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: {{  Values.backend-report.hpa.averageUtilization  }}
+          averageUtilization: {{  .Values.backend-report.hpa.averageUtilization  }}

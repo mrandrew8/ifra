@@ -9,15 +9,15 @@ spec:
     kind: Deployment
     name: {{ .Chart.Name }}
   updatePolicy:
-    updateMode: {{  backend.VPA.updateMode}}
+    updateMode: {{  .Values.backend.VPA.updateMode}}
   resourcePolicy:
     containerPolicies:
-      - containerName: {{  backend.VPA.containerName  }}
+      - containerName: {{  .Values.backend.VPA.containerName  }}
         minAllowed:
-          cpu: {{  backend.VPA.minAllowed.cpu  }}
-          memory: {{  backend.VPA.minAllowed.memory  }}
+          cpu: {{  .Values.backend.VPA.minAllowed.cpu  }}
+          memory: {{  .Values.backend.VPA.minAllowed.memory  }}
         maxAllowed:
-          cpu: {{  backend.VPA.maxAllowed.cpu  }}
-          memory: {{  backend.VPA.maxAllowed.memory  }}
-        controlledResources: {{  backend.VPA.controlledResources  }}
-        controlledValues: {{  backend.VPA.controlledValues  }} 
+          cpu: {{  .Values.backend.VPA.maxAllowed.cpu  }}
+          memory: {{  .Values.backend.VPA.maxAllowed.memory  }}
+        controlledResources: {{  .Values.backend.VPA.controlledResources  }}
+        controlledValues: {{  .Values.backend.VPA.controlledValues  }} 
