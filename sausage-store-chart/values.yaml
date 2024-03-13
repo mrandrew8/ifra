@@ -78,7 +78,7 @@ fontend:
       name: nginx-conf
       items:
       key: nginx.conf
-       path: nginx.conf
+      path: nginx.conf
   ingress:
     ingressClassName: "nginx"
     host: "nikolaev-andrey-24.k8s.praktikum-services.tech"
