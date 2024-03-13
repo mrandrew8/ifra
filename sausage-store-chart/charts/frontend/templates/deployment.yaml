@@ -6,12 +6,12 @@ metadata: # метаданные
   labels:
     app: {{ .Chart.Name }}
 spec:
-  replicas: {{  .Values.frontend.replicas  }}
-  revisionHistoryLimit: {{  .Values.frontend.revisionHistoryLimit  }}
+  replicas: {{  .Values.frontend.deployment.replicas  }}
+  revisionHistoryLimit: {{  .Values.frontend.deployment.revisionHistoryLimit  }}
   # Стратегия развёртывания. Recreate — удалит сначала все старые Pod'ы 
   # Есть и более гибкая стратегии, например, RollingUpdate, которая будет обновлять Pod'ы порциями  
   strategy:
-    type: {{  .Values.frontend.strategytype  }}
+    type: {{  .Values.frontend.deployment.strategytype  }}
   selector:
     matchLabels:
       app: {{ .Chart.Name }}
@@ -29,11 +29,11 @@ spec:
                   - key: app
                     operator: In
                     values:
-                    - {{  .Values.frontend.affinityvalues  }} # узнал верный label при помощи kubectl describe node/пробежаться по нодам | grep Label
+                    - {{  .Values.frontend.deployment.affinityvalues  }} # узнал верный label при помощи kubectl describe node/пробежаться по нодам | grep Label
       containers:
         - name: {{ .Chart.Name }}
-          image: {{  .Values.frontend.image  }}
-          imagePullPolicy: {{  .Values.frontend.imagePullPolicy  }} # image извлекается всегда
+          image: {{  .Values.frontend.deployment.image  }}
+          imagePullPolicy: {{  .Values.frontend.deployment.imagePullPolicy  }} # image извлекается всегда
           # env:
           #   - name: VAULT_HOST
           #     value: 51.250.8.146
@@ -44,7 +44,7 @@ spec:
           #         key: vault_token
           ports:
             - name: {{ .Chart.Name }}
-              containerPort: {{  .Values.frontend.containerPort  }}
+              containerPort: {{  .Values.frontend.deployment.containerPort  }}
           volumeMounts:
             - name: nginx-conf
               mountPath: /etc/nginx/nginx.conf

@@ -19,5 +19,5 @@ spec:
         maxAllowed:
           cpu: {{  .Values.backend.VPA.maxAllowed.cpu  }}
           memory: {{  .Values.backend.VPA.maxAllowed.memory  }}
-        controlledResources: {{  .Values.backend.VPA.controlledResources  }}
-        controlledValues: {{  .Values.backend.VPA.controlledValues  }} 
+        controlledResources: ["cpu", "memory"]
+        controlledValues: RequestsAndLimits 
