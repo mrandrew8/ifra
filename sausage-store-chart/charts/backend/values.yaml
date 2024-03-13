@@ -1,0 +1,41 @@
+backend:
+  app: backend
+  port: 8080
+  service: 
+    type: ClusterIP
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+
+  deployment :
+    replicas: 1
+    revisionHistoryLimit: 15
+    strategytype: RollingUpdate
+    maxUnavailable: 1 #максимальное количество одновременно неработающих Pod'ов в процессе обновления
+    maxSurge: 20%
+    image: gitlab.praktikum-services.ru:5050/std-024-12/sausage-store2/sausage-backend:latest
+    imagePullPolicy: Always # image извлекается всегда
+    SPRING_DATASOURCE_USERNAME: std-024-12
+    SPRING_DATASOURCE_PASSWORD: Testusr1234
+    SPRING_DATASOURCE_URL: jdbc:postgresql://rc1d-6ltxi07qdaaunpa5.mdb.yandexcloud.net:6432/std-024-12?ssl=true
+    SPRING_DATA_MONGODB_URI: mongodb://std-024-12:Testusr1234@rc1d-fmpc8y27lrcif391.mdb.yandexcloud.net:27018/std-024-12?tls=true
+    SPRING_FLYWAY_BASELINE_ON_MIGRATE: true
+    containerPort: 8080
+    livenessProbe_path: /actuator/health
+    livenessProbe_port: 8080
+    initialDelaySeconds: 15
+    periodSeconds: 30
+    timeoutSeconds: 1
+    failureThreshold: 6
+
+  VPA:
+    updateMode: "Auto"
+    containerName: "*"
+    minAllowed:
+      cpu: 0m
+      memory: 0Mi
+    maxAllowed:
+      cpu: 1
+      memory: 500Mi
+    controlledResources: ["cpu", "memory"]
+    controlledValues: RequestsAndLimits 
