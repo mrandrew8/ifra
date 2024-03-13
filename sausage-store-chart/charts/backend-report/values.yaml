@@ -1,0 +1,14 @@
+backend_report:
+  app: backend-report
+  deployment:
+    replicas: 1
+    revisionHistoryLimit: 15
+    strategytype: Recreate
+    image: gitlab.praktikum-services.ru:5050/std-024-12/sausage-store2/backend-report:latest
+    imagePullPolicy: Always # image извлекается всегда
+    DB: mongodb://std-024-12:Testusr1234@rc1d-fmpc8y27lrcif391.mdb.yandexcloud.net:27018/std-024-12?tls=true&tlsCAFile=/app/CA.pem
+    containerPort: 8080
+  hpa:
+    minReplicas: 1
+    maxReplicas: 5
+    averageUtilization: 75
