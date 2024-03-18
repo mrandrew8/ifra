@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment # тип сущности
+metadata: # метаданные
+  name: {{ .Chart.Name }}
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  replicas: {{  .Values.backend_report.deployment.replicas  }}
+  revisionHistoryLimit: {{  .Values.backend_report.deployment.revisionHistoryLimit  }}
+  # Стратегия развёртывания. Recreate — удалит сначала все старые Pod'ы 
+  # Есть и более гибкая стратегии, например, RollingUpdate, которая будет обновлять Pod'ы порциями  
+  strategy:
+    type: {{  .Values.backend_report.deployment.strategytype  }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{  .Values.backend_report.deployment.image  }}
+          imagePullPolicy: Always # image извлекается всегда
+          env:
+            - name: DB
+              value: {{  .Values.backend_report.deployment.DB  }}
+          # env:
+          #   - name: VAULT_HOST
+          #     value: 51.250.8.146
+          #   - name: VAULT_TOKEN
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: vault
+          #         key: vault_token
+          ports:
+            - name: {{ .Chart.Name }}
+              containerPort: {{  .Values.backend_report.deployment.containerPort  }}
+          # livenessProbe:
+          #   httpGet:
+          #     path: /actuator/health
+          #     port: 8080
+          #   initialDelaySeconds: 15
+          #   periodSeconds: 30
+          #   timeoutSeconds: 1
+          #   failureThreshold: 6
+      imagePullSecrets:
+       - name: docker-config-secret # Чтобы получить образ из частного реестра, Kubernetes необходимы учетные данные. Поле imagePullSecretsв файле конфигурации указывает, что Kubernetes должен получить учетные данные из секрета с именем docker-config-secret
+
+

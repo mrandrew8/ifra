@@ -1,0 +1,62 @@
+---
+apiVersion: apps/v1
+kind: Deployment # тип сущности
+metadata: # метаданные
+  name: {{ .Chart.Name }}
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  replicas: {{  .Values.frontend.deployment.replicas  }}
+  revisionHistoryLimit: {{  .Values.frontend.deployment.revisionHistoryLimit  }}
+  # Стратегия развёртывания. Recreate — удалит сначала все старые Pod'ы 
+  # Есть и более гибкая стратегии, например, RollingUpdate, которая будет обновлять Pod'ы порциями  
+  strategy:
+    type: {{  .Values.frontend.deployment.strategytype  }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 80
+              preference:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                    - {{  .Values.frontend.deployment.affinityvalues  }} # узнал верный label при помощи kubectl describe node/пробежаться по нодам | grep Label
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{  .Values.frontend.deployment.image  }}
+          imagePullPolicy: {{  .Values.frontend.deployment.imagePullPolicy  }} # image извлекается всегда
+          # env:
+          #   - name: VAULT_HOST
+          #     value: 51.250.8.146
+          #   - name: VAULT_TOKEN
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: vault
+          #         key: vault_token
+          ports:
+            - name: {{ .Chart.Name }}
+              containerPort: {{  .Values.frontend.deployment.containerPort  }}
+          volumeMounts:
+            - name: nginx-conf
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+              readOnly: true
+      volumes:
+        - name: nginx-conf
+          configMap:
+            name: nginx-conf
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+      imagePullSecrets:
+       - name: docker-config-secret # Чтобы получить образ из частного реестра, Kubernetes необходимы учетные данные. Поле imagePullSecretsв файле конфигурации указывает, что Kubernetes должен получить учетные данные из секрета с именем docker-config-secret
+
