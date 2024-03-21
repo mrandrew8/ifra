@@ -26,7 +26,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: {{  .Values.backend.deployment.image  }} 
-          imagePullPolicy: {{  .Values.backend.deployment.imagePullPolicy  }} # image извлекается всегда
+          imagePullPolicy: IfNotPresent # image извлекается всегда
           env:
             - name: SPRING_DATASOURCE_USERNAME
               value: {{  .Values.backend.deployment.SPRING_DATASOURCE_USERNAME  }}
