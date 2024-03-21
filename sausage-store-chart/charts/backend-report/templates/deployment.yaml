@@ -23,7 +23,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: {{  .Values.backend_report.deployment.image  }}
-          imagePullPolicy: Always # image извлекается всегда
+          imagePullPolicy: IfNotPresent # image извлекается всегда
           env:
             - name: DB
               value: {{  .Values.backend_report.deployment.DB  }}
