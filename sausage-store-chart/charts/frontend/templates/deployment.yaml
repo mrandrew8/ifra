@@ -33,7 +33,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: {{  .Values.frontend.deployment.image  }}
-          imagePullPolicy: {{  .Values.frontend.deployment.imagePullPolicy  }} # image извлекается всегда
+          imagePullPolicy: IfNotPresent # image извлекается всегда
           # env:
           #   - name: VAULT_HOST
           #     value: 51.250.8.146
